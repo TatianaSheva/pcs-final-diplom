@@ -37,10 +37,13 @@ public class BooleanSearchEngine implements SearchEngine {
                     PageEntry pageEntry = new PageEntry(pdf.getName(), i, freqs.get(word));
                     if (map.containsKey(word)) {
                         map.get(word).add(pageEntry);
+
                     } else {
                         map.put(word, new ArrayList<>());
                         map.get(word).add(pageEntry);
                     }
+                    //Сортировка
+                    map.values().forEach(Collections::sort);
                 }
             }
         }
@@ -48,8 +51,17 @@ public class BooleanSearchEngine implements SearchEngine {
 
     @Override
     public List<PageEntry> search(String word) {
-        List<PageEntry> result = map.get(word);
-        Collections.sort(result);
+        //Создаем пустой список с результатами поиска
+        List<PageEntry> result = new ArrayList<>();
+        //Переводим слова в нижний регистра
+        String wordToLowerCase = word.toLowerCase();
+        //Если слово есть в базе - перебираем результаты поиска и добавляем их в список
+        if (map.get(wordToLowerCase) != null) {
+            for (PageEntry pageEntry : map.get(wordToLowerCase)) {
+                result.add(pageEntry);
+            }
+        }
+       // Collections.sort(result);
         return result;
     }
 }

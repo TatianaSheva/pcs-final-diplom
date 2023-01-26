@@ -26,11 +26,12 @@ public class PageEntry implements Comparable<PageEntry> {
 
     @Override
     public String toString() {
-        return "{" +
-                "pdfName: " + pdfName + '\'' +
-                ", page: " + page +
-                ", count: " + count +
-                "}" + '\n';
+        Map resultMap = new LinkedHashMap();
+        resultMap.put("pdfName", pdfName);
+        resultMap.put("page", page);
+        resultMap.put("count", count);
+        JSONObject result = new JSONObject(resultMap);
+        return result.toString();
     }
 }
 
